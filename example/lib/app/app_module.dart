@@ -3,6 +3,7 @@ import 'package:example/app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:path_navigator/path_navigator.dart';
 import 'package:responsive_scaffold/responsive_scaffold.dart';
+import 'routes/user_route.dart';
 
 class AppModule extends PathModule {
   @override
@@ -12,7 +13,7 @@ class AppModule extends PathModule {
   List<PathBuilder> get routes => [
         PathBuilder(HomeRoute.name, (_) => HomeRoute()),
         PathBuilder(SettingsRoute.name, (_) => SettingsRoute()),
-        PathBuilder(ListRoute.name, (_) => ListRoute()),
+        PathBuilder(UserRoute.name, (_) => UserRoute()),
       ];
   Widget get child => EntyPint();
 }
@@ -77,27 +78,30 @@ class EntyPint extends StatelessWidget {
 
   Drawer buildDrawer() {
     return Drawer(
-      child: ListView(
-        children: [
-          ListTile(
-            title: Text("Home"),
-            onTap: () {
-              PathNavigator.pushNewRoute(HomeRoute());
-            },
-          ),
-          ListTile(
-            title: Text("Setting"),
-            onTap: () {
-              PathNavigator.pushNewRoute(SettingsRoute());
-            },
-          ),
-          ListTile(
-            title: Text("List"),
-            onTap: () {
-              PathNavigator.pushNewRoute(ListRoute());
-            },
-          ),
-        ],
+      child: Container(
+        color: Colors.grey[350],
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text("Home"),
+              onTap: () {
+                PathNavigator.pushNewRoute(HomeRoute());
+              },
+            ),
+            ListTile(
+              title: Text("Settings"),
+              onTap: () {
+                PathNavigator.pushNewRoute(SettingsRoute());
+              },
+            ),
+            ListTile(
+              title: Text("Users"),
+              onTap: () {
+                PathNavigator.pushNewRoute(UserRoute());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

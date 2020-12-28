@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:path_navigator/path_navigator.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-
 
 class SidePushScaffold extends StatefulWidget {
   const SidePushScaffold({
@@ -28,23 +26,23 @@ class _SidePushScaffoldState extends State<SidePushScaffold> {
     return ResponsiveBuilder(builder: (context, sizingInfo) {
       switch (sizingInfo.deviceScreenType) {
         case DeviceScreenType.mobile:
-
-        case DeviceScreenType.tablet:
-          // return Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: [
-          //     BackButton(
-          //       onPressed: () {
-          //         RouteState.pop();
-          //       },
-          //     ),
-          //     lastThreeRoutes2.last.pageBuilder(context, lastThreeRoutes2.last),
-          //   ],
-          // );
           visibleNumber = 1;
           break;
+        case DeviceScreenType.tablet:
+        // return Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     BackButton(
+        //       onPressed: () {
+        //         RouteState.pop();
+        //       },
+        //     ),
+        //     lastThreeRoutes2.last.pageBuilder(context, lastThreeRoutes2.last),
+        //   ],
+        // );
+
         case DeviceScreenType.desktop:
           visibleNumber = widget.maxNumberOfSection;
           break;
@@ -64,8 +62,8 @@ class _SidePushScaffoldState extends State<SidePushScaffold> {
               } catch (e) {}
               bool isVisible = i > lastThreeRoutes2.length - visibleNumber - 1;
               return AnimatedContainer(
-                color: Color((Random().nextDouble() * 0xFFFFFF).toInt())
-                    .withOpacity(1.0),
+                // color: Color((Random().nextDouble() * 0xFFFFFF).toInt())
+                //     .withOpacity(1.0),
                 duration: duration,
                 width: e == null || !isVisible
                     ? 0
@@ -87,13 +85,15 @@ class _SidePushScaffoldState extends State<SidePushScaffold> {
                                     icon: Icon(Icons.expand),
                                     onPressed: () async {
                                       if (e.subRoute != null)
-                                       expand =  await PathNavigator.pushAndRemoveUntil(
-                                            e,
-                                            (a) =>
-                                                a.routeName ==
-                                                (e?.subRoute?.routeName ??
-                                                    a.routeName));
-                                      else expand = true;
+                                        expand = await PathNavigator
+                                            .pushAndRemoveUntil(
+                                                e,
+                                                (a) =>
+                                                    a.routeName ==
+                                                    (e?.subRoute?.routeName ??
+                                                        a.routeName));
+                                      else
+                                        expand = true;
                                       setState(() {
                                         // expand = true;
                                       });
@@ -106,13 +106,13 @@ class _SidePushScaffoldState extends State<SidePushScaffold> {
                                       });
                                     }),
                           ),
-                          Align(
-                            child: BackButton(
-                              onPressed: () {
-                                PathNavigator.pop();
-                              },
-                            ),
-                          )
+                          // Align(
+                          //   child: BackButton(
+                          //     onPressed: () {
+                          //       PathNavigator.pop();
+                          //     },
+                          //   ),
+                          // )
                         ],
                       ),
               );
@@ -127,15 +127,18 @@ class _SidePushScaffoldState extends State<SidePushScaffold> {
   List<Path> lastThreeRoutes() {
     // CustomRouteState routeState = locator.get<CustomRouteState>();
 
-    return PathNavigator.activeSubRouteList;
+    return PathNavigator.activeRouteList;
   }
 }
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("HOME"),
+    return Container(
+      color: Colors.purple[100],
+      child: Center(
+        child: Text("HOME"),
+      ),
     );
   }
 }
@@ -144,8 +147,8 @@ class AppShell2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          PathNavigator.currentRoute.pageBuilder(context, PathNavigator.currentRoute),
+      body: PathNavigator.currentRoute
+          .pageBuilder(context, PathNavigator.currentRoute),
     );
   }
 }
